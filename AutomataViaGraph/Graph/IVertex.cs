@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AutomataViaGraph.Graph
 {
-    internal interface IVertex<T>
+    public interface IVertex<T>
     {
         T Value { get; set; }
         IEnumerable<IEdge<T>> Edges { get; set; }
