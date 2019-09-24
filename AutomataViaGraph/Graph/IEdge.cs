@@ -4,9 +4,9 @@ using System.Text;
 
 namespace AutomataViaGraph.Graph
 {
-    public interface IVertex<T>
+    public interface IEdge<T>
     {
-        T Value { get; set; }
-        IEnumerable<IEdge<T>> Edges { get; set; }
+        IVertex<T> From { get; set; }
+        IVertex<T> To { get; set; }
     }
 }
