@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Test1
+namespace Test_Default_Graph
 {
     class Program
     {

@@ -11,5 +11,6 @@ namespace AutomataViaGraph.Graph
         void Add(T data);
         void Remove(T data);
         void AddEdge(T vertex1, T vertex2);
+        void RemoveEdge(T vertex1, T vertex2);
     }
 }
