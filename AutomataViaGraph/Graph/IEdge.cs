@@ -8,5 +8,6 @@ namespace AutomataViaGraph.Graph
     {
         IVertex<T> From { get; set; }
         IVertex<T> To { get; set; }
+        string Name { get; set; }
     }
 }

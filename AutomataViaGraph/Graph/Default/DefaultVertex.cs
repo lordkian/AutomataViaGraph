@@ -6,21 +6,20 @@ namespace AutomataViaGraph.Graph.Default
 {
     public class DefaultVertex<T> : IVertex<T>
     {
-        public T Value { get { return _value; } set { _value = value; } }
-        private T _value;
-        public IEnumerable<IEdge<T>> Edges { get { return _edges; } set => throw new NotImplementedException(); }
-        private List<IEdge<T>> _edges = new List<IEdge<T>>();
+        public T Value { get; set; }
+        public IEnumerable<IEdge<T>> Edges { get; set; }
+        public string Name { get; set; }
         public override bool Equals(object obj)
         {
-            return obj is DefaultVertex<T> && (obj as DefaultVertex<T>)._value.Equals(_value);
+            return obj is DefaultVertex<T> && (obj as DefaultVertex<T>).Value.Equals(Value);
         }
         public override int GetHashCode()
         {
-            return _value.GetHashCode();
+            return Value.GetHashCode();
         }
         public override string ToString()
         {
-            return _value.ToString();
+            return Value.ToString();
         }
     }
 }

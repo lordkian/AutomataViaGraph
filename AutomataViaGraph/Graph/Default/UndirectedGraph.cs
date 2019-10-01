@@ -10,15 +10,14 @@ namespace AutomataViaGraph.Graph.Default
         public IEnumerable<IVertex<T>> Vertices { get { return _vertices; } }
         private List<DefaultEdge<T>> _edges = new List<DefaultEdge<T>>();
         private List<DefaultVertex<T>> _vertices = new List<DefaultVertex<T>>();
-        public void Add(T data)
+        public void Add(T data, string name)
         {
             foreach (var item in _vertices)
                 if (item.Value.Equals(data))
                     throw new ArgumentException("A vertex with the same value has already been added.");
             _vertices.Add(new DefaultVertex<T>() { Value = data });
         }
-
-        public void AddEdge(T vertex1, T vertex2)
+        public void AddEdge(T vertex1, T vertex2, string name)
         {
             if (vertex1.Equals(vertex2))
                 throw new ArgumentException("tow vertices must be diffrent.");
@@ -37,7 +36,6 @@ namespace AutomataViaGraph.Graph.Default
             (v1.Edges as List<IEdge<T>>).Add(edge);
             (v2.Edges as List<IEdge<T>>).Add(edge);
         }
-
         public void Remove(T data)
         {
             DefaultVertex<T> removeItem = null;
@@ -48,7 +46,6 @@ namespace AutomataViaGraph.Graph.Default
                 throw new ArgumentException("An item with this value does not exist.");
             _vertices.Remove(removeItem);
         }
-
         public void RemoveEdge(T vertex1, T vertex2)
         {
             if (vertex1.Equals(vertex2))
@@ -69,6 +66,14 @@ namespace AutomataViaGraph.Graph.Default
                     return;
                 }
             throw new ArgumentException("An edge with this values does not exist.");
+        }
+        public void Add(T data)
+        {
+            Add(data, "");
+        }
+        public void AddEdge(T vertex1, T vertex2)
+        {
+            AddEdge(vertex1, vertex2, "");
         }
     }
 }

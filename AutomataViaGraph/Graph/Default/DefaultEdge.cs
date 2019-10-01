@@ -6,18 +6,19 @@ namespace AutomataViaGraph.Graph.Default
 {
     public class DefaultEdge<T> : IEdge<T>
     {
-        public IVertex<T> From { get { return _from; } set { _from = value; } }
-        public IVertex<T> To { get { return _to; } set { _to = value; } }
-        private IVertex<T> _from, _to;
+        public IVertex<T> From { get; set; }
+        public IVertex<T> To { get; set; }
+        public string Name { get; set; }
+
         public override bool Equals(object obj)
         {
             return obj is DefaultEdge<T> &&
-                (((obj as DefaultEdge<T>)._from.Equals(_from) && (obj as DefaultEdge<T>)._to.Equals(_to)) ||
-                 ((obj as DefaultEdge<T>)._to.Equals(_from) && (obj as DefaultEdge<T>)._from.Equals(_to)));
+                (((obj as DefaultEdge<T>).From.Equals(From) && (obj as DefaultEdge<T>).To.Equals(To)) ||
+                 ((obj as DefaultEdge<T>).To.Equals(From) && (obj as DefaultEdge<T>).From.Equals(To)));
         }
         public override string ToString()
         {
-            return _from.ToString() + "\n" + _to.ToString();
+            return From.ToString() + "\n" + To.ToString();
         }
         public override int GetHashCode()
         {
