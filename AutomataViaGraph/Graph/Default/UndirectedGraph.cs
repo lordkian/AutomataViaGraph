@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AutomataViaGraph.Graph.Default
 {
     public class UndirectedGraph<T> : IGraph<T>
     {
-        public IEnumerable<IEdge<T>> Edges { get { return _edges; } }
+        public IEnumerable<IEdge<T>> Edges
+        {
+            get
+            {
+                var edges = new List<IEdge<T>>();
+                foreach (var item in Vertices)
+                    edges.AddRange(item.Edges);
+                return edges.Distinct().ToList();
+            }
+        }
         public IEnumerable<IVertex<T>> Vertices { get { return _vertices; } }
-        private List<DefaultEdge<T>> _edges = new List<DefaultEdge<T>>();
         private List<DefaultVertex<T>> _vertices = new List<DefaultVertex<T>>();
         public void Add(T data, string name)
         {
@@ -61,8 +70,8 @@ namespace AutomataViaGraph.Graph.Default
             foreach (var item in v1.Edges)
                 if (item.From.Equals(v2) || item.To.Equals(v2))
                 {
-                    (v1.Edges as List<IEdge<T>>).Add(item);
-                    (v2.Edges as List<IEdge<T>>).Add(item);
+                    (v1.Edges as List<IEdge<T>>).Remove(item);
+                    (v2.Edges as List<IEdge<T>>).Remove(item);
                     return;
                 }
             throw new ArgumentException("An edge with this values does not exist.");
