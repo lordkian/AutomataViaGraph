@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutomataViaGraph.Graph;
+using AutomataViaGraph.Graph.Default;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,11 @@ namespace GUI_Graph_Editor
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            new Form2(new UndirectedGraph<Label>()).Show();
         }
     }
 }

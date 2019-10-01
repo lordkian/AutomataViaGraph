@@ -88,5 +88,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutomataViaGraph\AutomataViaGraph.csproj">
+      <Project>{42b2e253-2118-4c9a-a104-0c5b9d7eb55f}</Project>
+      <Name>AutomataViaGraph</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
