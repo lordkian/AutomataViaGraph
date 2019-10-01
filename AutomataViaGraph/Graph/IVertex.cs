@@ -8,5 +8,6 @@ namespace AutomataViaGraph.Graph
     {
         T Value { get; set; }
         IEnumerable<IEdge<T>> Edges { get; set; }
+        string Name { get; set; }
     }
 }
