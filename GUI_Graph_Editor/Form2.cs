@@ -14,6 +14,9 @@ namespace GUI_Graph_Editor
     public partial class Form2 : Form
     {
         public IGraph<Label> Graph { get; set; }
+        private bool dragging;
+        private int startX;
+        private int startY;
         public Form2(IGraph<Label> graph)
         {
             Graph = graph;
@@ -24,7 +27,12 @@ namespace GUI_Graph_Editor
         {
             groupBox1.Controls.Clear();
             foreach (var item in Graph.Vertices)
+            {
                 groupBox1.Controls.Add(item.Value);
+                item.Value.MouseDown += LabelMouseDown;
+                item.Value.MouseMove += LabelMouseMove;
+                item.Value.MouseUp += LabelMouseUp;
+            }
             groupBox1.Refresh();
         }
 
@@ -50,6 +58,28 @@ namespace GUI_Graph_Editor
             lbl.Left = random.Next(0, groupBox1.Width - lbl.Width);
             Graph.Add(lbl, textBox1.Text);
             RefreshGroupBox();
+        }
+
+        private void LabelMouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            startX = e.X;
+            startY = e.Y;
+        }
+
+        private void LabelMouseMove(object sender, MouseEventArgs e)
+        {
+            var lbl = sender as Label;
+            if ((dragging == true))
+            {
+                lbl.Location = new Point(lbl.Location.X + (e.X - startX), lbl.Location.Y + (e.Y - startY));
+                Refresh();
+            }
+        }
+
+        private void LabelMouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
         }
     }
 }
