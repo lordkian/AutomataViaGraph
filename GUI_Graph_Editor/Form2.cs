@@ -48,6 +48,8 @@ namespace GUI_Graph_Editor
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            if (textBox1.Text.Length < 1)
+                return;
             var random = new Random();
             var lbl = new Label()
             {
