@@ -43,8 +43,16 @@ namespace GUI_Graph_Editor
             if (Graph == null)
                 return;
             Pen pen = new Pen(Color.FromArgb(255, 0, 0, 0));
+            Font font = new Font("Arial", 14);
             foreach (var item in Graph.Edges)
-                e.Graphics.DrawLine(pen, item.From.Value.Top, item.From.Value.Left, item.To.Value.Top, item.To.Value.Left);
+            {
+                var x1 = item.From.Value.Left + item.From.Value.Width / 2;
+                var x2 = item.To.Value.Left + item.To.Value.Width / 2;
+                var y1 = item.From.Value.Top + item.From.Value.Height / 2;
+                var y2 = item.To.Value.Top + item.To.Value.Height / 2;
+                e.Graphics.DrawLine(pen, x1, y1, x2, y2);
+                e.Graphics.DrawString(item.Name, font, Brushes.Blue, (x1 + x2) / 2, (y1 + y2) / 2);
+            }
             pen.Dispose();
         }
 
@@ -113,6 +121,14 @@ namespace GUI_Graph_Editor
         private void Button2_Click(object sender, EventArgs e)
         {
             var i = groupBox1.Controls;
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text.Length < 1 || SelectedLabels.Count != 2)
+                return;
+            Graph.AddEdge(SelectedLabels[0], SelectedLabels[1], textBox1.Text);
+            groupBox1.Refresh();
         }
     }
 }
