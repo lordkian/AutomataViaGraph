@@ -24,7 +24,7 @@ namespace AutomataViaGraph.Graph.Default
             foreach (var item in _vertices)
                 if (item.Value.Equals(data))
                     throw new ArgumentException("A vertex with the same value has already been added.");
-            _vertices.Add(new DefaultVertex<T>() { Value = data });
+            _vertices.Add(new DefaultVertex<T>() { Value = data, Name = name });
         }
         public void AddEdge(T vertex1, T vertex2, string name)
         {
@@ -41,7 +41,7 @@ namespace AutomataViaGraph.Graph.Default
             foreach (var item in v1.Edges)
                 if (item.From.Equals(v2) || item.To.Equals(v2))
                     throw new ArgumentException("An edge with the same value has already been added.");
-            var edge = new DefaultEdge<T>() { From = v1, To = v2 };
+            var edge = new DefaultEdge<T>() { From = v1, To = v2, Name = name };
             (v1.Edges as List<IEdge<T>>).Add(edge);
             (v2.Edges as List<IEdge<T>>).Add(edge);
         }
