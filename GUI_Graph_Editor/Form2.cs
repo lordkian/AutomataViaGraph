@@ -14,6 +14,7 @@ namespace GUI_Graph_Editor
     public partial class Form2 : Form
     {
         public IGraph<Label> Graph { get; set; }
+        private List<Label> SelectedLabels = new List<Label>();
         private bool dragging;
         private int startX;
         private int startY;
@@ -32,6 +33,7 @@ namespace GUI_Graph_Editor
                 item.Value.MouseDown += LabelMouseDown;
                 item.Value.MouseMove += LabelMouseMove;
                 item.Value.MouseUp += LabelMouseUp;
+                item.Value.DoubleClick += LabelDoubleClick;
             }
             groupBox1.Refresh();
         }
@@ -59,20 +61,44 @@ namespace GUI_Graph_Editor
             lbl.Top = random.Next(0, groupBox1.Height - lbl.Height);
             lbl.Left = random.Next(0, groupBox1.Width - lbl.Width);
             Graph.Add(lbl, textBox1.Text);
-            RefreshGroupBox();
+            groupBox1.Controls.Add(lbl);
+            lbl.MouseDown += LabelMouseDown;
+            lbl.MouseMove += LabelMouseMove;
+            lbl.MouseUp += LabelMouseUp;
+            lbl.DoubleClick += LabelDoubleClick;
+        }
+
+        private void LabelDoubleClick(object sender, EventArgs e)
+        {
+            var lbl = sender as Label;
+            if (SelectedLabels.Contains(lbl))
+            {
+                lbl.BackColor = Color.Transparent;
+                SelectedLabels.Remove(lbl);
+            }
+            else
+            {
+                lbl.BackColor = Color.Red;
+                SelectedLabels.Add(lbl);
+                if (SelectedLabels.Count > 2)
+                    LabelDoubleClick(SelectedLabels[0], e);
+            }
         }
 
         private void LabelMouseDown(object sender, MouseEventArgs e)
         {
-            dragging = true;
-            startX = e.X;
-            startY = e.Y;
+            if (e.Button == MouseButtons.Left)
+            {
+                dragging = true;
+                startX = e.X;
+                startY = e.Y;
+            }
         }
 
         private void LabelMouseMove(object sender, MouseEventArgs e)
         {
             var lbl = sender as Label;
-            if ((dragging == true))
+            if (lbl != null && dragging && e.Button == MouseButtons.Left)
             {
                 lbl.Location = new Point(lbl.Location.X + (e.X - startX), lbl.Location.Y + (e.Y - startY));
                 Refresh();
@@ -82,6 +108,11 @@ namespace GUI_Graph_Editor
         private void LabelMouseUp(object sender, MouseEventArgs e)
         {
             dragging = false;
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            var i = groupBox1.Controls;
         }
     }
 }
