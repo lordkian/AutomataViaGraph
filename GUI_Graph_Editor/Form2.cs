@@ -46,12 +46,31 @@ namespace GUI_Graph_Editor
             Font font = new Font("Arial", 14);
             foreach (var item in Graph.Edges)
             {
-                var x1 = item.From.Value.Left + item.From.Value.Width / 2;
-                var x2 = item.To.Value.Left + item.To.Value.Width / 2;
-                var y1 = item.From.Value.Top + item.From.Value.Height / 2;
-                var y2 = item.To.Value.Top + item.To.Value.Height / 2;
-                e.Graphics.DrawLine(pen, x1, y1, x2, y2);
-                e.Graphics.DrawString(item.Name, font, Brushes.Blue, (x1 + x2) / 2, (y1 + y2) / 2);
+                if (item.From.Equals(item.To))
+                {
+                    var x = item.From.Value.Left + item.From.Value.Width / 2;
+                    var y = item.From.Value.Top + item.From.Value.Height / 2;
+                    if (x > 100)
+                        x -= 50;
+                    else
+                        x += 50;
+                    if (y > 50)
+                        y -= 25;
+                    else
+                        y += 25;
+                    e.Graphics.DrawEllipse(pen, x, y, 50, 50);
+                    e.Graphics.DrawString(item.Name, font, Brushes.Blue, x, y);
+
+                }
+                else
+                {
+                    var x1 = item.From.Value.Left + item.From.Value.Width / 2;
+                    var x2 = item.To.Value.Left + item.To.Value.Width / 2;
+                    var y1 = item.From.Value.Top + item.From.Value.Height / 2;
+                    var y2 = item.To.Value.Top + item.To.Value.Height / 2;
+                    e.Graphics.DrawLine(pen, x1, y1, x2, y2);
+                    e.Graphics.DrawString(item.Name, font, Brushes.Blue, (x1 + x2) / 2, (y1 + y2) / 2);
+                }
             }
             pen.Dispose();
         }
@@ -125,9 +144,12 @@ namespace GUI_Graph_Editor
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Length < 1 || SelectedLabels.Count != 2)
+            if (textBox1.Text.Length < 1)
                 return;
-            Graph.AddEdge(SelectedLabels[0], SelectedLabels[1], textBox1.Text);
+            if (SelectedLabels.Count == 2)
+                Graph.AddEdge(SelectedLabels[0], SelectedLabels[1], textBox1.Text);
+            else if (SelectedLabels.Count == 1)
+                Graph.AddEdge(SelectedLabels[0], SelectedLabels[0], textBox1.Text);
             groupBox1.Refresh();
         }
     }

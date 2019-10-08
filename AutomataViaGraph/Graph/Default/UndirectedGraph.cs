@@ -28,14 +28,14 @@ namespace AutomataViaGraph.Graph.Default
         }
         public void AddEdge(T vertex1, T vertex2, string name)
         {
-            if (vertex1.Equals(vertex2))
-                throw new ArgumentException("tow vertices must be diffrent.");
             DefaultVertex<T> v1 = null, v2 = null;
             foreach (var item in _vertices)
+            {
                 if (item.Value.Equals(vertex1))
                     v1 = item;
-                else if (item.Value.Equals(vertex2))
+                if (item.Value.Equals(vertex2))
                     v2 = item;
+            }
             if (v1 == null || v2 == null)
                 throw new ArgumentException("A Vertex with this value does not exist.");
             foreach (var item in v1.Edges)
