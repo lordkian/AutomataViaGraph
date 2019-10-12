@@ -50,16 +50,10 @@ namespace GUI_Graph_Editor
                 {
                     var x = item.From.Value.Left + item.From.Value.Width / 2;
                     var y = item.From.Value.Top + item.From.Value.Height / 2;
-                    if (x > 100)
-                        x -= 50;
-                    else
-                        x += 50;
-                    if (y > 50)
-                        y -= 25;
-                    else
-                        y += 25;
+                    x -= 50;
+                    y -= 10;
                     e.Graphics.DrawEllipse(pen, x, y, 50, 50);
-                    e.Graphics.DrawString(item.Name, font, Brushes.Blue, x, y);
+                    e.Graphics.DrawString(item.Name, font, Brushes.Blue, x + 20, y + 20);
 
                 }
                 else
