@@ -34,7 +34,7 @@ namespace AutomataViaGraph.Graph.Default
                 foreach (var item in _vertices)
                     if (item.Value.Equals(vertex1))
                         v = item;
-                if (v == null )
+                if (v == null)
                     throw new ArgumentException("A Vertex with this value does not exist.");
                 foreach (var item in v.Edges)
                     if (item.From.Equals(v) && item.To.Equals(v))
@@ -70,6 +70,8 @@ namespace AutomataViaGraph.Graph.Default
                     removeItem = item;
             if (removeItem == null)
                 throw new ArgumentException("An item with this value does not exist.");
+            foreach (var item in removeItem.Edges)
+                RemoveEdge(item.From.Value, item.To.Value);
             _vertices.Remove(removeItem);
         }
         public void RemoveEdge(T vertex1, T vertex2)
