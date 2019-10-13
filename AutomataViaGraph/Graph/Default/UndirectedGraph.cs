@@ -70,7 +70,7 @@ namespace AutomataViaGraph.Graph.Default
                     removeItem = item;
             if (removeItem == null)
                 throw new ArgumentException("An item with this value does not exist.");
-            foreach (var item in removeItem.Edges)
+            foreach (var item in removeItem.Edges.ToArray())
                 RemoveEdge(item.From.Value, item.To.Value);
             _vertices.Remove(removeItem);
         }

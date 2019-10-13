@@ -133,7 +133,12 @@ namespace GUI_Graph_Editor
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            var i = groupBox1.Controls;
+            if (SelectedLabels.Count != 1)
+                return;
+            Graph.Remove(SelectedLabels[0]);
+            groupBox1.Controls.Remove(SelectedLabels[0]);
+            SelectedLabels[0].Dispose();
+            groupBox1.Refresh();
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -144,6 +149,14 @@ namespace GUI_Graph_Editor
                 Graph.AddEdge(SelectedLabels[0], SelectedLabels[1], textBox1.Text);
             else if (SelectedLabels.Count == 1)
                 Graph.AddEdge(SelectedLabels[0], SelectedLabels[0], textBox1.Text);
+            groupBox1.Refresh();
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            if (SelectedLabels.Count < 2)
+                return;
+            Graph.RemoveEdge(SelectedLabels[0], SelectedLabels[1]);
             groupBox1.Refresh();
         }
     }
